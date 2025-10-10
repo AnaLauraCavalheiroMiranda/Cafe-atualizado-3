@@ -119,6 +119,14 @@ const Copos = [
     
   ];
 
+  const combos= [
+    {id:"Combo_simples", nome:"Combos simples", preco:17.00},
+    {id:"Combos_vane", nome:"Combos Vane", preco:50.00},
+    {id:"Combos_ray", nome:"Combos Ray", preco:40.00},
+    {id:"Combos_eckhardt", nome:"Combos Eckhardt", preco:40.00},
+    {id:"Combos_pistache", nome:"Combos Pistache", preco:40.00}
+  ];
+
   var itensCarrinho = [];
 
 function preencherOpcoes(){
