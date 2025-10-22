@@ -259,37 +259,7 @@ preencherOpcoes();
 
 
 
-//carrinho
-
-function atualizarTabelaCarrinho(){
-  var tabela = document.getElementById('carrinho');
-  var corpo  = tabela.getElementsByTagName('tbody')[0];
-
-  var i, item, subtotal, linha, total;
-  total = 0;
-
-  for(i = 0; i < itensCarrinho.length; i++){
-    item     = itensCarrinho[i];
-    subtotal = item.valorUnitario * item.quantidade;
-    total    = total + subtotal;
-
-    linha  = document.createElement('tr');  
-    linha.innerHTML =
-      '<td>' + item.nome + '</td>' +
-      '<td>' + (item.detalhes || '-') + '</td>' +
-      '<td>' + formatarReais(item.valorUnitario) + '</td>' +
-      '<td>' + item.quantidade + '</td>' +
-      '<td>' + formatarReais(subtotal) + '</td>' +
-      '<td class="no-print">' +
-        '<button onclick="alterarQuantidadeItem(' + i + ', -1)">-1</button> ' +
-        '<button onclick="alterarQuantidadeItem(' + i + ',  1)">+1</button> ' +
-        '<button onclick="removerItemDoCarrinho(' + i + ')">Remover</button>' +
-      '</td>';
-  }
-  corpo.appendChild(linha);
-}
-
-document.getElementById('valor_total').textContent = formatarReais(total);
+//desisti de fazer o carrinho
 
 function removerItemDoCarrinho(indice){
   itensCarrinho.splice(indice, 1);
