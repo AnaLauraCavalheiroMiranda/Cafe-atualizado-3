@@ -332,6 +332,7 @@ function gerarRelatorio(){
   <p><strong>Chá:</strong> ${Chas1.nome} - R$ ${custoChas.toFixed(2)}</p>
   <p><strong>Temperatura:</strong> ${temperatura1.nome} - R$ ${custotemperatura.toFixed(2)}</p>
   <p><strong>Xicara:</strong> ${Xicaras1.nome} - R$ ${custoXicaras.toFixed(2)}</p>
+  <p><strong>Copos:</strong> ${Copos1.nome} - R$ ${custoCopos.toFixed(2)}</p>
   <p><strong>Açucar:</strong> ${acucar1.nome} - R$ ${custoacucar.toFixed(2)}</p>
   <p><strong>Chocolate:</strong> ${Chocolate1.nome} - R$ ${custoChocolate.toFixed(2)}</p>
   <p><strong>Caldas:</strong> ${caldas1.nome} - R$ ${custocaldas.toFixed(2)}</p>
