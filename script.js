@@ -124,8 +124,10 @@ const Copos = [
     {id:"Combos_vane", nome:"Combos Vane", preco:50.00},
     {id:"Combos_ray", nome:"Combos Ray", preco:40.00},
     {id:"Combos_eckhardt", nome:"Combos Eckhardt", preco:40.00},
-    {id:"Combos_pistache", nome:"Combos Pistache", preco:40.00}
+    {id:"Combos_pistache", nome:"Combos Pistache", preco:40.00},
+    {id:"Combos_fagundes", nome:"Combos Fagundes", preco:35.00}
   ];
+
 
   var itensCarrinho = [];
 
@@ -289,12 +291,39 @@ function gerarRelatorio(){
   const acucarId = document.getElementById("acucar").value;
   const caldasId = document.getElementById("caldas").value;
   const leitesId = document.getElementById("leites").value;
-  const forma_pagamentoId = document.getElementById("forma_pagamento").value;
   const observacoesId = document.getElementById("observacoes").value;
   const quantidade = document.getElementById("quantidade").value;
   const donuts_S_Id = document.getElementById("donuts_S").value;
   const donuts_D_Id = document.getElementById("donuts_D").value;
   const temperatura_cha_Id = document.getElementById("temperatura_cha").value;
+  const formasPagamento = document.getElementsByName("forma_pagamento");
+
+  let forma_pagamentoId;
+  for (let i = 0; i < formasPagamento.length; i++) {
+      if (formasPagamento[i].checked) {
+          forma_pagamentoId = formasPagamento[i].value;
+          break; // Sai do loop assim que encontrar o que está selecionado
+      }
+  }
+  // Se a variável "forma_pagamentoId" não estiver marcada, então ele devolve para o usuario que a forma de pagamento não está selecionado
+  if (!forma_pagamentoId) {
+      forma_pagamentoId = "Nenhuma forma de pagamento selecionada";
+  }
+  //da agora pa usar a forma de pagmento no relatorio :D
+  console.log("Forma de pagamento:", forma_pagamentoId);
+
+
+  let observacaoFinal;
+
+  // Verifica se a observação está vazia
+  if (observacoesId.trim() === "") {
+    observacaoFinal = "Nenhuma observação";
+  } else {
+    observacaoFinal = observacoesId;
+  }
+
+  // Agora da pa usar a observação final no relatorio :3
+  console.log("Observações:", observacaoFinal);
 
 
   var Cafe1 = procurarPorId(Cafe, CafeId);
@@ -323,7 +352,7 @@ function gerarRelatorio(){
   const custoleites = leites1.preco * quantidade;
   const custodonuts_S = donuts_S1.preco * quantidade;
   const custodonuts_D = donuts_D1.preco * quantidade;
-  const total = custoCafe + custoChas + custoChocolate + custoCopos + custoXicaras + custoacucar + custocaldas + custoleites + custotemperatura + custodonuts_S + custodonuts_D;
+  const total = custoCafe + custoChas + custoChocolate + custoCopos + custoXicaras + custoacucar + custocaldas + custoleites + custotemperatura + custodonuts_S + custodonuts_D + custotemperatura_cha;
 
   const relatorioHTML = `
   <h2>Pedido final</h2>
@@ -338,7 +367,7 @@ function gerarRelatorio(){
   <p><strong>Caldas:</strong> ${caldas1.nome} - R$ ${custocaldas.toFixed(2)}</p>
   <p><strong>Leite:</strong> ${leites1.nome} - R$ ${custoleites.toFixed(2)}</p>
   <p><strong>Comida:</strong> ${donuts_S1.nome} - R$ ${custodonuts_S.toFixed(2)} ${donuts_D1.nome} - R$ ${custodonuts_D.toFixed(2)}</p>
-  <p><strong>Observações:</strong> ${observacoesId}<p>
+  <p><strong>Observações:</strong> ${observacaoFinal}<p>
   <p><strong>Forma de pagamento:</strong> ${forma_pagamentoId}<p>
   <p><strong>Total:</strong> ${total.toFixed(2)}<p>
 `;
