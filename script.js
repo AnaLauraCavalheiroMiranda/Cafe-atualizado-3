@@ -305,7 +305,7 @@ function gerarRelatorio(){
           break; // Sai do loop assim que encontrar o que está selecionado
       }
   }
-  // Se a variável "forma_pagamentoId" não estiver marcada, então ele devolve para o usuario que a forma de pagamento não está selecionado
+  // Se a variável não estiver marcada, então o progama avisa que a forma de pagamento não está selecionada
   if (!forma_pagamentoId) {
       forma_pagamentoId = "Nenhuma forma de pagamento selecionada";
   }
@@ -362,7 +362,7 @@ function gerarRelatorio(){
   <p><strong>Temperatura:</strong> ${temperatura1.nome} - R$ ${custotemperatura.toFixed(2)}</p>
   <p><strong>Xicara:</strong> ${Xicaras1.nome} - R$ ${custoXicaras.toFixed(2)}</p>
   <p><strong>Copos:</strong> ${Copos1.nome} - R$ ${custoCopos.toFixed(2)}</p>
-  <p><strong>Açucar:</strong> ${acucar1.nome} - R$ ${custoacucar.toFixed(2)}</p>
+  <p><strong>Açucar:</strong> ${acucar1.nome} - R$ ${custoacucar.toFixed(2)}</p>   
   <p><strong>Chocolate:</strong> ${Chocolate1.nome} - R$ ${custoChocolate.toFixed(2)}</p>
   <p><strong>Caldas:</strong> ${caldas1.nome} - R$ ${custocaldas.toFixed(2)}</p>
   <p><strong>Leite:</strong> ${leites1.nome} - R$ ${custoleites.toFixed(2)}</p>
