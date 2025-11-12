@@ -11,6 +11,8 @@
         top: 0;
         width: 100%;
     }
+
+    /*Aqui começa a mecher dentro do site, em cima é o código do relatório*/
 }
 body{
         margin: 0; 
@@ -20,11 +22,13 @@ body{
         color:#f0da96;
 }
 header{
+    text-align: center;
     background-color: #2b2b2b3b ;
     width: auto;
-    height: 150px;
-    }
-    footer{
+    height: auto;
+}
+
+footer{
     background-color: #2b2b2b3b;
     width: auto;
     height: 150px;
@@ -40,7 +44,6 @@ header{
     display: flex; 
     justify-content: space-around; 
     align-items:flex-start; 
-    gap: 20px; 
 }
 
 .texto {
@@ -62,7 +65,6 @@ h2 {
     display: flex; 
     justify-content: space-around; 
     align-items:flex-start; 
-    gap: 20px; 
 }
 
 .texto1 {
@@ -86,7 +88,6 @@ h2 {
     display: flex; 
     justify-content: space-around; 
     align-items:flex-start; 
-    gap: 20px; 
 }
 
 .texto2 {
