@@ -36,6 +36,7 @@ footer {
     background-color: #2b2b2b3b;
     width: auto;
     height: 150px;
+    position: relative;
 }
 
 /* Estilo específico para o rodapé do site*/
@@ -98,4 +99,8 @@ h2 {
 .imagem-Logo {
     width: 400px;
     height: auto; 
+}
+.imagem-Final {
+    width: 150px;
+    height: auto;
 }
