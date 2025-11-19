@@ -357,124 +357,108 @@ function limparCarrinho(){
 
 //Tentando gerar o relatorio
 
-function gerarRelatorio(){
+function gerarRelatorio() {
 
-  const nome = document.getElementById("nome").value;
+  const nome = document.getElementById("nome").value || "Cliente";
+  const quantidade = parseInt(document.getElementById("quantidade").value) || 1; //força um numero garantindo que sempre tenha 1 na quantidade para não dar errado esse || 1 é o operador lógico caso não tenha numero ele força o 1 evitando que ele calcule com o NaN
+
   const CafeId = document.getElementById("Cafe").value;
   const ChasId = document.getElementById("Chas").value;
   const temperaturaId = document.getElementById("temperatura").value; 
   const temperatura_cha_Id = document.getElementById("temperatura_cha").value;
-  const Copos_cafeId = document.getElementById("Copos").value;
-  const Xicaras_cafeId = document.getElementById("Xicaras").value;
-  const Chocolate_cafeId = document.getElementById("Chocolate").value;
-  const acucar_cafeId = document.getElementById("acucar").value;
-  const caldas_cafeId = document.getElementById("caldas").value;
-  const leites_cafeId = document.getElementById("leites").value;
 
-  const Copos_chaId = document.getElementById("Copos").value;
-  const Xicaras_chaId = document.getElementById("Xicaras").value;
-  const Chocolate_chaId = document.getElementById("Chocolate").value;
-  const acucar_chaId = document.getElementById("acucar").value;
-  const caldas_chaId = document.getElementById("caldas").value;
-  const leites_chaId = document.getElementById("leites").value;
-  const formasPagamento_Id = document.getElementById("forma_pagamento").value;
-  const observacoesId = document.getElementById("observacoes").value;
-  const quantidade = document.getElementById("quantidade").value;
+  const Copos_cafeId     = document.getElementById("Copos_cafe").value;
+  const Xicaras_cafeId   = document.getElementById("Xicaras_cafe").value;
+  const Chocolate_cafeId = document.getElementById("Chocolate_cafe").value;
+  const acucar_cafeId    = document.getElementById("acucar_cafe").value;
+  const caldas_cafeId    = document.getElementById("caldas_cafe").value;
+  const leites_cafeId    = document.getElementById("leites_cafe").value;
+
+  const Copos_chaId      = document.getElementById("Copos_cha").value;
+  const Xicaras_chaId    = document.getElementById("Xicaras_cha").value;
+  const Chocolate_chaId  = document.getElementById("Chocolate_cha").value;
+  const acucar_chaId     = document.getElementById("acucar_cha").value;
+  const caldas_chaId     = document.getElementById("caldas_cha").value;
+  const leites_chaId     = document.getElementById("leites_cha").value;
+
   const donuts_S_Id = document.getElementById("donuts_S").value;
   const donuts_D_Id = document.getElementById("donuts_D").value;
+  const observacoes = document.getElementById("observacoes").value.trim();
 
-  let forma_pagamentoId;
+  // Arrumando a forma de pagamento para que apareça ela (O negócio dos radios buttons)
+  let forma_pagamentoId = "Nenhuma forma de pagamento selecionada";
+  const formasPagamento = document.getElementsByName("forma_pagamento"); // ajuste se o name for diferente
   for (let i = 0; i < formasPagamento.length; i++) {
       if (formasPagamento[i].checked) {
           forma_pagamentoId = formasPagamento[i].value;
-          break; // Sai do loop assim que encontrar o que está selecionado
+          break;
       }
   }
-  // Se a variável não estiver marcada, então o progama avisa que a forma de pagamento não está selecionada
-  if (!forma_pagamentoId) {
-      forma_pagamentoId = "Nenhuma forma de pagamento selecionada";
-  }
-  //da agora pa usar a forma de pagmento no relatorio :D
-  console.log("Forma de pagamento:", forma_pagamentoId);
 
-  let observacaoFinal;
+  const observacaoFinal = observacoes == "" ? "Nenhuma observação" : observacoes;
 
-  // Verifica se a observação está vazia
-  if (observacoesId.trim() === "") {
-      observacaoFinal = "Nenhuma observação";
-  } else {
-      observacaoFinal = observacoesId;
-  }
+  // Busca segura (evita erro se escolher "Nenhum")
+  const Cafe1          = procurarPorId(Cafe, CafeId) || { nome: "Nenhum", preco: 0 }; // esse || { nome: "Nenhum", preco: 0 }; é baiscamente isso: "Tenta buscar o café. Se não encontrar (ou for null), usa esse objeto falso com nome 'Nenhum' e preço 0"
+  const Chas1          = procurarPorId(Chas, ChasId) || { nome: "Nenhum", preco: 0 };
+  const temperatura1   = procurarPorId(temperatura, temperaturaId) || { nome: "", preco: 0 };
+  const temperatura_cha_2 = procurarPorId(temperatura_cha, temperatura_cha_Id) || { nome: "", preco: 0 };
 
-  // Agora da pa usar a observação final no relatorio :3
-  console.log("Observações:", observacaoFinal);
+  const Copos1         = procurarPorId(Copos_cafe, Copos_cafeId) || { nome: "Nenhum", preco: 0 };
+  const Xicaras1       = procurarPorId(Xicaras_cafe, Xicaras_cafeId) || { nome: "Nenhum", preco: 0 };
+  const Chocolate1     = procurarPorId(Chocolate_cafe, Chocolate_cafeId) || { nome: "Nenhum", preco: 0 };
+  const acucar1        = procurarPorId(acucar_cafe, acucar_cafeId) || { nome: "Nenhum", preco: 0 };
+  const caldas1        = procurarPorId(caldas_cafe, caldas_cafeId) || { nome: "Nenhum", preco: 0 };
+  const leites1        = procurarPorId(leites_cafe, leites_cafeId) || { nome: "Nenhum", preco: 0 };
 
-  var Cafe1 = procurarPorId(Cafe, CafeId);
-  var Chas1 = procurarPorId(Chas, ChasId);
-  var temperatura1 = procurarPorId(temperatura,temperaturaId);
-  var Copos1 = procurarPorId(Copos_cafe, Copos_cafeId);
-  var Xicaras1 = procurarPorId(Xicaras_cafe, Xicaras_cafeId);
-  var Chocolate1 = procurarPorId(Chocolate_cafe, Chocolate_cafeId);
-  var acucar1 = procurarPorId(acucar_cafe, acucar_cafeId);
-  var caldas1 = procurarPorId(caldas_cafe, caldas_cafeId);
-  var leites1 = procurarPorId(leites_cafe, leites_cafeId);
+  const Copos2         = procurarPorId(Copos_cha, Copos_chaId) || { nome: "Nenhum", preco: 0 };
+  const Xicaras2       = procurarPorId(Xicaras_cha, Xicaras_chaId) || { nome: "Nenhum", preco: 0 };
+  const Chocolate2     = procurarPorId(Chocolate_cha, Chocolate_chaId) || { nome: "Nenhum", preco: 0 };
+  const acucar2        = procurarPorId(acucar_cha, acucar_chaId) || { nome: "Nenhum", preco: 0 };
+  const caldas2        = procurarPorId(caldas_cha, caldas_chaId) || { nome: "Nenhum", preco: 0 };
+  const leites2        = procurarPorId(leites_cha, leites_chaId) || { nome: "Nenhum", preco: 0 };
 
-  var Copos2 = procurarPorId(Copos_cha, Copos_chaId);
-  var Xicaras2 = procurarPorId(Xicaras_cha, Xicaras_chaId);
-  var Chocolate2 = procurarPorId(Chocolate_cha, Chocolate_chaId);
-  var acucar2 = procurarPorId(acucar_cha, acucar_chaId);
-  var caldas2 = procurarPorId(caldas_cha, caldas_chaId);
-  var leites2 = procurarPorId(leites_cha, leites_chaId);
-  var donuts_S1 = procurarPorId (donuts_S, donuts_S_Id);
-  var donuts_D1 = procurarPorId (donuts_D, donuts_D_Id);
-  var temperatura_cha_2 = procurarPorId (temperatura_cha, temperatura_cha_Id);
+  const donuts_S1      = procurarPorId(donuts_S, donuts_S_Id) || { nome: "Nenhum", preco: 0 };
+  const donuts_D1      = procurarPorId(donuts_D, donuts_D_Id) || { nome: "Nenhum", preco: 0 };
 
-  const custoCafe = Cafe1.preco * quantidade;
-  const custoChas = Chas1.preco * quantidade;
-  const custotemperatura = temperatura1.preco * quantidade;
-  const custotemperatura_cha = temperatura_cha_2.preco * quantidade;
-  const custoCopos_cafe = Copos1.preco * quantidade;
-  const custoXicaras_cafe = Xicaras1.preco * quantidade;
-  const custoChocolate_cafe = Chocolate1.preco * quantidade; 
-  const custoacucar_cafe= acucar1.preco * quantidade;
-  const custocaldas_cafe = caldas1.preco * quantidade;
-  const custoleites_cafe = leites1.preco * quantidade;
-  const custoCopos_cha = Copos2.preco * quantidade;
-  const custoXicaras_cha = Xicaras2.preco * quantidade;
-  const custoChocolate_cha = Chocolate2.preco * quantidade; 
-  const custoacucar_cha = acucar2.preco * quantidade;
-  const custocaldas_cha = caldas2.preco * quantidade;
-  const custoleites_cha = leites2.preco * quantidade; 
-  const custodonuts_S = donuts_S1.preco * quantidade;
-  const custodonuts_D = donuts_D1.preco * quantidade;
-  const total = custoCafe + custoChas + custoChocolate_cafe  +custoChocolate_cha + custoCopos_cafe + custoXicaras_cafe + custoacucar_cafe + custocaldas_cafe + custoleites_cafe +custoCopos_cha + custoXicaras_cha + custoacucar_cha + custocaldas_cha + custoleites_cha + custotemperatura + custotemperatura_cha + custodonuts_S + custodonuts_D;
+  // Cálculo dos custos totais
+  const total = 
+      (Cafe1.preco + Chas1.preco + temperatura1.preco + temperatura_cha_2.preco +
+       Copos1.preco + Xicaras1.preco + Chocolate1.preco + acucar1.preco + caldas1.preco + leites1.preco +
+       Copos2.preco + Xicaras2.preco + Chocolate2.preco + acucar2.preco + caldas2.preco + leites2.preco +
+       donuts_S1.preco + donuts_D1.preco) * quantidade;
 
+  // Relatório com HTML separado e mais organizado
   const relatorioHTML = `
-  
-  <h2>Pedido final</h2>
-  <p><strong>Nome do cliente:</strong>${nome}<p>
-  <p><strong>Café</strong> ${Cafe1.nome} - R$ ${custoCafe.toFixed(2)}</p>
-  <p><strong>Temperatura cafe :</strong> ${temperatura1.nome}</p>
-  <p><strong>Temperatura cha:</strong> ${temperatura_cha_2.nome}</p>
-  <p><strong>Copos:</strong>${Copos1.nome} - R$ ${custoCopos_cafe}
-  <p><strong>Xicara:</strong> ${Xicaras1.nome} - R$ ${custoXicaras_cafe.toFixed(2)}</p>
-  <p><strong>Açucar:</strong> ${acucar1.nome} - R$ ${custoacucar_cafe.toFixed(2)}</p>
-  <p><strong>Chocolate:</strong> ${Chocolate1.nome} - R$ ${custoChocolate_cafe.toFixed(2)}</p>
-  <p><strong>Caldas:</strong> ${caldas1.nome} - R$ ${custocaldas_cafe.toFixed(2)}</p>
-  <p><strong>Leite:</strong> ${leites1.nome} - R$ ${custoleites_cafe.toFixed(2)}</p>
-
-  <p><strong>Chá:</strong> ${Chas1.nome} - R$ ${custoChas.toFixed(2)}</p>
-  <p><strong>Copos:</strong>${Copos2.nome} - R$ ${custoCopos_cha}
-  <p><strong>Xicara:</strong> ${Xicaras2.nome} - R$ ${custoXicaras_cha.toFixed(2)}</p>
-  <p><strong>Açucar:</strong> ${acucar2.nome} - R$ ${custoacucar_cha.toFixed(2)}</p>
-  <p><strong>Chocolate:</strong> ${Chocolate2.nome} - R$ ${custoChocolate_cha.toFixed(2)}</p>
-  <p><strong>Caldas:</strong> ${caldas2.nome} - R$ ${custocaldas_cha.toFixed(2)}</p>
-  <p><strong>Leite:</strong> ${leites2.nome} - R$ ${custoleites_cha.toFixed(2)}</p>
-  <p><strong>Comida salgado:</strong> ${donuts_S1.nome} - R$ ${custodonuts_S.toFixed(2)}</p> 
-  <p><strong>Comida doce:</strong> ${donuts_D1.nome} - R$ ${custodonuts_D.toFixed(2)}</p>
-  <p><strong>Observações:</strong> ${observacoesId}<p>
-  <p><strong>Forma de pagamento:</strong> ${formasPagamento_Id}<p>
-  <p><strong>Total:</strong> ${total.toFixed(2)}<p>
+    <h2>Pedido Final</h2>
+    <p><strong>Nome do cliente:</strong> ${nome}</p>
+    <p><strong>Café:</strong> ${Cafe1.nome} - R$ ${(Cafe1.preco * quantidade).toFixed(2)}</p>
+    <p><strong>Temperatura (café):</strong> ${temperatura1.nome}</p>
+    <p><strong>Chá:</strong> ${Chas1.nome} - R$ ${(Chas1.preco * quantidade).toFixed(2)}</p>
+    <p><strong>Temperatura (chá):</strong> ${temperatura_cha_2.nome}</p>
+    
+    <br>
+    <h3>Adicionais Café</h3>
+    <p><strong>Copo/Xícara:</strong> ${Copos1.nome !== "Nenhum" ? Copos1.nome : Xicaras1.nome} - R$ ${((Copos1.preco + Xicaras1.preco) * quantidade).toFixed(2)}</p>
+    <p><strong>Chocolate:</strong> ${Chocolate1.nome} - R$ ${(Chocolate1.preco * quantidade).toFixed(2)}</p>
+    <p><strong>Açúcar:</strong> ${acucar1.nome} - R$ ${(acucar1.preco * quantidade).toFixed(2)}</p>
+    <p><strong>Caldas:</strong> ${caldas1.nome} - R$ ${(caldas1.preco * quantidade).toFixed(2)}</p>
+    <p><strong>Leite:</strong> ${leites1.nome} - R$ ${(leites1.preco * quantidade).toFixed(2)}</p>
+    
+    <br>
+    <h3>Adicionais Chá</h3>
+    <p><strong>Copo/Xícara:</strong> ${Copos2.nome !== "Nenhum" ? Copos2.nome : Xicaras2.nome} - R$ ${((Copos2.preco + Xicaras2.preco) * quantidade).toFixed(2)}</p>
+    <p><strong>Chocolate:</strong> ${Chocolate2.nome} - R$ ${(Chocolate2.preco * quantidade).toFixed(2)}</p>
+    <p><strong>Açúcar:</strong> ${acucar2.nome} - R$ ${(acucar2.preco * quantidade).toFixed(2)}</p>
+    <p><strong>Caldas:</strong> ${caldas2.nome} - R$ ${(caldas2.preco * quantidade).toFixed(2)}</p>
+    <p><strong>Leite:</strong> ${leites2.nome} - R$ ${(leites2.preco * quantidade).toFixed(2)}</p>
+    
+    <br>
+    <h3><strong>Comidas:</h3>
+    <p><strong>Donut Salgado:</strong> ${donuts_S1.nome} - R$ ${(donuts_S1.preco * quantidade).toFixed(2)}</p>
+    <p><strong>Donut Doce:</strong> ${donuts_D1.nome} - R$ ${(donuts_D1.preco * quantidade).toFixed(2)}</p>
+    <p><strong>Observações:</strong> ${observacaoFinal}</p>
+    <p><strong>Forma de pagamento:</strong> ${forma_pagamentoId}</p>
+    <h3><strong>Total: R$ ${total.toFixed(2)}</strong></h3>
   `;
 
   document.getElementById("relatorio").innerHTML = relatorioHTML;

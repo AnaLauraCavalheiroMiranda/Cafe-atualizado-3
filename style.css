@@ -38,6 +38,11 @@ footer {
     height: 150px;
     position: relative;
 }
+.cabeca fieldset {
+    height: 1px;
+    transform: scaleY(0.4); /* Esse codigo reduz a altura usando Transform: scaleY(0.4) isso fará com que o elemento de 1px pareça ter 0.4px de altura.*/
+    background-color: #f0da96;
+}
 
 /* Estilo específico para o rodapé do site*/
 .pé {
