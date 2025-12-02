@@ -23,12 +23,14 @@ const Chas = [
 ];
 
 const temperatura = [
+ { id:"nenhum", nome:"nenhum", preco: 0 },  
  { id:"Quente", nome:"Quente", preco: 0 },
  { id:"Morno", nome:"Morno", preco: 0 },
  { id:"Gelado", nome:"Gelado", preco: 0 }
 ];
 
 const temperatura_cha = [
+ { id:"nenhum", nome:"nenhum", preco: 0 },   
  { id:"Quente", nome:"Quente", preco: 0 },
  { id:"Morno", nome:"Morno", preco: 0 },
  { id:"Gelado", nome:"Gelado", preco: 0 }
@@ -341,6 +343,7 @@ function procurarPorId(lista, idProcurado) {
 
 preencherOpcoes();
 
+
 // Funções do Carrinho
 //-------------------------------------------------------------
 
@@ -391,6 +394,34 @@ function adicionarPersonalizadoAoCarrinho() {
 
     const DonutSalgadoId   = document.getElementById("donuts_S").value;
     const DonutDoceId      = document.getElementById("donuts_D").value;
+    // === VALIDAÇÕES OBRIGATÓRIAS ===
+
+    const temCafe = CafeId !== "Nenhum" && CafeId !== "";
+    const temCha  = ChasId !== "Nenhum" && ChasId !== "";
+
+    // Se tem CAFÉ → exige temperatura + copo OU xícara
+    if (temCafe) {
+        if (!temperaturaCafe || temperaturaCafe === "nenhum") {
+            alert("Você escolheu um café, mas não selecionou a temperatura!\nPor favor, escolha Quente, Morno ou Gelado.");
+            return;
+        }
+        if (CoposCafeId === "Nenhum" && XicarasCafeId === "Nenhum") {
+            alert("Você escolheu café, mas não selecionou copo nem xícara!\nEscolha para prosseguir com o pedido.");
+            return;
+        }
+    }
+
+    // Se tem CHÁ → exige temperatura + copo OU xícara
+    if (temCha) {
+        if (!temperaturaCha || temperaturaCha === "nenhum") {
+            alert("Você escolheu um chá, mas não selecionou a temperatura!\nPor favor, escolha Quente, Morno ou Gelado.");
+            return;
+        }
+        if (CoposChaId === "Nenhum" && XicarasChaId === "Nenhum") {
+            alert("Você escolheu chá, mas não selecionou copo nem xícara!\nEscolha para prosseguir com o pedido.");
+            return;
+        }
+    }
 
     // === BUSCANDO OS OBJETOS CORRESPONDENTES ===
     const cafe          = procurarPorId(Cafe, CafeId);
@@ -588,9 +619,23 @@ function gerarRelatorio() {
     const nome = document.getElementById("nome").value.trim() || "Cliente";
     const observacoes = document.getElementById("observacoes").value.trim();
 
-    // Forma de pagamento
-    let forma_pagamento = "Não informado";
+   // Validação da forma de pagamento
+    let formaPagamentoSelecionada = false;
     const formas = document.getElementsByName("forma_pagamento");
+    for (let i = 0; i < formas.length; i++) {
+        if (formas[i].checked) {
+            formaPagamentoSelecionada = true;
+            break;
+        }
+    }
+
+    if (!formaPagamentoSelecionada) {
+        alert("Por favor, selecione uma forma de pagamento antes de confirmar o pedido!");
+        return; // Interrompe a função se não tiver forma de pagamento
+    }
+
+    // Pega a forma de pagamento selecionada
+    let forma_pagamento = "";
     for (let i = 0; i < formas.length; i++) {
         if (formas[i].checked) {
             forma_pagamento = formas[i].value;
@@ -628,23 +673,24 @@ function gerarRelatorio() {
     const relatorioHTML = `
         <div class="comprovante">
             <div class="cabecalho-comprovante">
-                <h1>ฅᨐฅ Cat Café</h1>
-                <p>✿Av. Alecrim Dourado do Campo, 280<br>Foz do Iguaçu - PR | (45) 7325-8983</p>
+                <h1> Cat Café</h1>
+                <p>✿ Av. Alecrim Dourado do Campo, 280<br>Foz do Iguaçu - PR | (45) 7325-8983</p>
                 <hr>
                 <p class="data-pedido">Data do pedido: ${dataAtual}</p>
             </div>
 
             <div class="info-cliente">
-                <h3>Dados do Cliente</h3>
+                <h3> • Dados do Cliente</h3>
                 <p><strong>Cliente:</strong> ${nome}</p>
                 ${forma_pagamento !== "Não informado" ? `<p><strong>Pagamento:</strong> ${forma_pagamento}</p>` : ""}
                 ${observacoes ? `<p><strong>Observações:</strong> ${observacoes}</p>` : ""}
             </div>
 
             <div class="itens-comprovante">
-                <h3>Itens do Pedido</h3>
+                <h3> • Itens do Pedido</h3>
                 ${itensHTML}
                 <div class="total-final">
+                <br>
                     <strong>Total a pagar:</strong>
                     <span class="valor-total">R$ ${totalGeral.toFixed(2)}</span>
                 </div>
@@ -652,7 +698,7 @@ function gerarRelatorio() {
 
             <div class="rodape-comprovante">
                 <p>Obrigado pela preferência! <br>
-                Volte sempre ao Cat Café! ♡(˶ᵔ ᵕ ᵔ˶)♡</p>
+                Volte sempre ao Cat Café! </p>
             </div>
         </div>
     `;

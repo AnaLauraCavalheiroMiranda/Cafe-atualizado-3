@@ -290,18 +290,18 @@ button:hover {
     cursor: pointer;
 }
 
-/* Botão Limpar Carrinho - cor vermelha */
-.btn-limpar {
-    background-color: #a83232;     /* cor padrão (vermelho escuro, igual ao btn-remover) */
-    color: white;
-    padding: 12px;
-    border-radius: 8px;
-    border: none;                  /* adicionado para garantir consistência */
-    cursor: pointer;               /* bom ter */
-    font-size: 16px;               /* opcional: deixar igual aos outros botões */
-    width: 100%;                   /* se quiser que ocupe a linha toda */
-}
 
-.btn-limpar:hover {
-    background-color: #c74444;     /* cor do hover - exatamente a que você quer */
+.btn-limpar {
+          
+    width: 200px; 
+    display: block; 
+    margin: 15px auto; 
+    border-radius: 20px; 
+    padding: 10px 20px;
+    background-color: #d52f2361;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    text-transform: uppercase;
 }
